@@ -10,7 +10,7 @@ type ErrorEmptyValue struct {
 
 // NewErrorEmptyValue function
 func NewErrorEmptyValue(field string) *ErrorEmptyValue {
-	return &ErrorEmptyValue{field: field, message: "%s cannot be emtpy"}
+	return &ErrorEmptyValue{field: field, message: "%s cannot be empty"}
 }
 
 // Error function

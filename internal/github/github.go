@@ -1,4 +1,4 @@
-package google
+package github
 
 import (
 	"context"
@@ -12,18 +12,18 @@ import (
 )
 
 const (
-	// DefaultAuthURI default Authorization URI for Google
-	DefaultAuthURI = "https://accounts.google.com/o/oauth2/auth"
+	// DefaultAuthURI default Authorization URI for Github
+	DefaultAuthURI = "https://github.com/login/oauth/authorize"
 
-	// DefaultTokenURI default Token URI for Google
-	DefaultTokenURI = "https://accounts.google.com/o/oauth2/token"
+	// DefaultTokenURI default Token URI for Github
+	DefaultTokenURI = "https://github.com/login/oauth/access_token"
 
-	// DefaultAPIRURI default API URI for Google
-	DefaultAPIRURI = "https://www.googleapis.com/oauth2/v2/userinfo"
+	// DefaultAPIRURI default API URI for Github
+	DefaultAPIRURI = "https://api.github.com/user"
 )
 
-// Google struct
-type Google struct {
+// Github struct
+type Github struct {
 	ClientID     string
 	ClientSecret string
 	AuthURI      string
@@ -34,10 +34,10 @@ type Google struct {
 	httpClient   *internal.HTTPClient
 }
 
-// New function, Google's Constructor
-func New(clientID, clientSecret, redirectURI string) *Google {
+// New function, Github's Constructor
+func New(clientID, clientSecret, redirectURI string) *Github {
 	httpClient := internal.NewHTTPClient()
-	return &Google{
+	return &Github{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		RedirectURI:  redirectURI,
@@ -49,12 +49,12 @@ func New(clientID, clientSecret, redirectURI string) *Google {
 }
 
 // GetAuthURI function
-func (g *Google) GetAuthURI() (string, error) {
+func (g *Github) GetAuthURI() (string, error) {
 	return "", nil
 }
 
 // GetAccessToken function
-func (g *Google) GetAccessToken(ctx context.Context, authorizationCode string) error {
+func (g *Github) GetAccessToken(ctx context.Context, authorizationCode string) error {
 
 	if g.ClientID == "" {
 		return internal.NewErrorEmptyValue("client id")
@@ -77,17 +77,16 @@ func (g *Google) GetAccessToken(ctx context.Context, authorizationCode string) e
 
 	headers := map[string]string{
 		"Content-Type": "application/x-www-form-urlencoded",
+		"Accept":       "application/json",
 	}
 
 	var response struct {
 		AccessToken      string `json:"access_token"`
-		ExpiresIn        int    `json:"expires_in"`
-		RefreshToken     string `json:"refresh_token"`
-		Scope            string `json:"scope"`
 		TokenType        string `json:"token_type"`
-		IDToken          string `json:"id_token"`
+		Scope            string `json:"scope"`
 		Error            string `json:"error"`
 		ErrorDescription string `json:"error_description"`
+		ErrorURI         string `json:"error_uri"`
 	}
 
 	err := g.httpClient.Execute(ctx, "POST", g.TokenURI, strings.NewReader(form.Encode()), &response, headers)
@@ -106,7 +105,7 @@ func (g *Google) GetAccessToken(ctx context.Context, authorizationCode string) e
 }
 
 // GetUser function
-func (g *Google) GetUser(ctx context.Context) (api.Result, error) {
+func (g *Github) GetUser(ctx context.Context) (api.Result, error) {
 
 	if g.Token == "" {
 		return nil, internal.NewErrorEmptyValue("access token")
@@ -124,8 +123,8 @@ func (g *Google) GetUser(ctx context.Context) (api.Result, error) {
 		return nil, err
 	}
 
-	if response.Error != nil {
-		return nil, errors.New(response.Error.Message)
+	if len(response.Message) > 0 {
+		return nil, errors.New(response.Message)
 	}
 
 	return &response, nil

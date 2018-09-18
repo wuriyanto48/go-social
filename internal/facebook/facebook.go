@@ -34,7 +34,7 @@ type Facebook struct {
 	httpClient   *internal.HTTPClient
 }
 
-// New function, Google's Constructor
+// New function, Facebook's Constructor
 func New(clientID, clientSecret, redirectURI string) *Facebook {
 	httpClient := internal.NewHTTPClient()
 	return &Facebook{
