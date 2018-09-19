@@ -15,7 +15,7 @@ Simple OAuth2 using Facebook login
 * Getting Authorization Code First
 `https://www.facebook.com/dialog/oauth?client_id={your_client_id}&redirect_uri=http://localhost:8080/callback&response_type=code`
 
-* Place Autorization Code to the second parameter of `GetAccessToken(ctx, "authorization_code")` function
+* Place Authorization Code to the second parameter of `GetAccessToken(ctx, "authorization_code")` function
 
 ```go
 package main
