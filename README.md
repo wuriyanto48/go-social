@@ -1,4 +1,5 @@
-### Social Login Helper for Go
+### Pluggable OAuth library for social login (Google, Facebook, Github, Linkedin)
+
 
 [![GoDoc](https://godoc.org/github.com/wuriyanto48/go-social?status.svg)](https://godoc.org/github.com/wuriyanto48/go-social)
 [![Build Status](https://travis-ci.org/wuriyanto48/go-social.svg?branch=master)](https://travis-ci.org/wuriyanto48/go-social)
