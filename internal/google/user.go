@@ -10,7 +10,9 @@ type User struct {
 	Gender        string `json:"gender"`
 	Email         string `json:"email"`
 	ID            string `json:"id"`
-	Error         *Error `json:"error,omitempty"`
+	// HD paylod for account using GSuite
+	HD    string `json:"hd,omitempty"`
+	Error *Error `json:"error,omitempty"`
 }
 
 // Error data structure
