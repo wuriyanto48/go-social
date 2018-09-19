@@ -10,7 +10,7 @@ import (
 
 //https://www.linkedin.com/oauth/v2/authorization?redirect_uri=http://localhost:8080/callback&response_type=code&client_id={client_id}&state=xwyz
 func main() {
-	l := linkedin.New("864f3rsb2yg6uu", "FuvnqEbjLOsZmvBP", "http://localhost:8080/callback")
+	l := linkedin.New("client_id", "client_secret", "http://localhost:8080/callback")
 
 	ctx := context.Background()
 	ctx, _ = context.WithTimeout(ctx, 3000*time.Millisecond)
