@@ -36,9 +36,9 @@ func main() {
 		fmt.Println(err)
 	}
 
-    // using context for cancellation
-    ctx := context.Background()
-    // set context timeout
+        // using context for cancellation
+        ctx := context.Background()
+        // set context timeout
 	ctx, _ = context.WithTimeout(ctx, 2000*time.Millisecond)
 
 	err = f.GetAccessToken(ctx, "authorization_code")
