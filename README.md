@@ -1,6 +1,7 @@
 ### Social Login Helper for Go
 
 [![GoDoc](https://godoc.org/github.com/wuriyanto48/go-social?status.svg)](https://godoc.org/github.com/wuriyanto48/go-social)
+[![Build Status](https://travis-ci.org/wuriyanto48/go-social.svg?branch=master)](https://travis-ci.org/wuriyanto48/go-social)
 
 ### Install
 ```shell
