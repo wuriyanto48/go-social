@@ -15,7 +15,7 @@ func main() {
 	ctx := context.Background()
 	ctx, _ = context.WithTimeout(ctx, 3000*time.Millisecond)
 
-	err := g.GetAccessToken(ctx, "44013f21c100445c6871")
+	err := g.GetAccessToken(ctx, "code")
 
 	if err != nil {
 		fmt.Println(err)
