@@ -5,17 +5,22 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/wuriyanto48/go-social"
 	"github.com/wuriyanto48/go-social/internal/github"
 )
 
 //https://github.com/login/oauth/authorize?client_id={your_client_id}&redirect_uri=http://localhost:8080/callback&scope=user,repo
 func main() {
-	g := github.New("client_id", "client_secret", "http://localhost:8080/callback")
+	g, err := social.New(social.Github, "client_id", "client_secret", "http://localhost:8080/callback")
+
+	if err != nil {
+		fmt.Println(err)
+	}
 
 	ctx := context.Background()
 	ctx, _ = context.WithTimeout(ctx, 3000*time.Millisecond)
 
-	err := g.GetAccessToken(ctx, "code")
+	err = g.GetAccessToken(ctx, "code")
 
 	if err != nil {
 		fmt.Println(err)
