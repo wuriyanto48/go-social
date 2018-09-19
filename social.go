@@ -14,8 +14,8 @@ import (
 type Type int
 
 // Provider structure
-type Provider struct {
-	Providers map[string]api.Service
+type provider struct {
+	providers map[string]api.Service
 }
 
 const (
@@ -54,19 +54,19 @@ func (t Type) String() string {
 	}
 }
 
-func newProvider(clientID, clientSecret, redirectURI string) *Provider {
+func newProvider(clientID, clientSecret, redirectURI string) *provider {
 	providers := make(map[string]api.Service)
 	providers["Facebook"] = facebook.New(clientID, clientSecret, redirectURI)
 	providers["Google"] = google.New(clientID, clientSecret, redirectURI)
 	providers["Github"] = github.New(clientID, clientSecret, redirectURI)
 	providers["Linkedin"] = linkedin.New(clientID, clientSecret, redirectURI)
-	return &Provider{providers}
+	return &provider{providers}
 }
 
 // New , return api.Service implementation
 func New(socialType Type, clientID, clientSecret, redirectURI string) (api.Service, error) {
 	providers := newProvider(clientID, clientSecret, redirectURI)
-	provider, ok := providers.Providers[socialType.String()]
+	provider, ok := providers.providers[socialType.String()]
 
 	if !ok {
 		return nil, errors.New("invalid provider type")
