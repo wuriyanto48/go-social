@@ -4,6 +4,8 @@
 [![GoDoc](https://godoc.org/github.com/wuriyanto48/go-social?status.svg)](https://godoc.org/github.com/wuriyanto48/go-social)
 [![Build Status](https://travis-ci.org/wuriyanto48/go-social.svg?branch=master)](https://travis-ci.org/wuriyanto48/go-social)
 
+[![forthebadge](https://forthebadge.com/images/badges/made-with-go.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/fuck-it-ship-it.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/contains-technical-debt.svg)](https://forthebadge.com)
+
 ### Install
 ```shell
 $ go get github.com/wuriyanto48/go-social
