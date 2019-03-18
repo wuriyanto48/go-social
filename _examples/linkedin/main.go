@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/wuriyanto48/go-social"
-	"github.com/wuriyanto48/go-social/internal/linkedin"
+	"github.com/wuriyanto48/go-social/pkg/linkedin"
 )
 
 //https://www.linkedin.com/oauth/v2/authorization?redirect_uri=http://localhost:8080/callback&response_type=code&client_id={client_id}&state=xwyz

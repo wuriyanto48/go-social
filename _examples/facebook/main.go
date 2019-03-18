@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/wuriyanto48/go-social"
-	"github.com/wuriyanto48/go-social/internal/facebook"
+	"github.com/wuriyanto48/go-social/pkg/facebook"
 )
 
 //https://www.facebook.com/dialog/oauth?client_id={your_client_id}&redirect_uri=http://localhost:8080/callback&response_type=code

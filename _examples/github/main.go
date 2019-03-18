@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/wuriyanto48/go-social"
-	"github.com/wuriyanto48/go-social/internal/github"
+	"github.com/wuriyanto48/go-social/pkg/github"
 )
 
 //https://github.com/login/oauth/authorize?client_id={your_client_id}&redirect_uri=http://localhost:8080/callback&scope=user,repo
