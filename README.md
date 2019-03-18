@@ -29,7 +29,7 @@ import (
 	"time"
 
 	"github.com/wuriyanto48/go-social"
-	"github.com/wuriyanto48/go-social/internal/facebook"
+	"github.com/wuriyanto48/go-social/pkg/facebook"
 )
 
 func main() {
