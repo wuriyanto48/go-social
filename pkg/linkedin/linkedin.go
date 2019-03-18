@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/wuriyanto48/go-social/api"
-	"github.com/wuriyanto48/go-social/internal"
+	"github.com/wuriyanto48/go-social/pkg"
 )
 
 const (
@@ -32,12 +32,12 @@ type Linkedin struct {
 	RedirectURI  string
 	Token        string
 	State        string
-	httpClient   *internal.HTTPClient
+	httpClient   *pkg.HTTPClient
 }
 
 // New function, Linkedin's Constructor
 func New(clientID, clientSecret, redirectURI string) *Linkedin {
-	httpClient := internal.NewHTTPClient()
+	httpClient := pkg.NewHTTPClient()
 	return &Linkedin{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
@@ -58,15 +58,15 @@ func (l *Linkedin) GetAuthURI() (string, error) {
 func (l *Linkedin) GetAccessToken(ctx context.Context, authorizationCode string) error {
 
 	if l.ClientID == "" {
-		return internal.NewErrorEmptyValue("client id")
+		return pkg.NewErrorEmptyValue("client id")
 	}
 
 	if l.ClientSecret == "" {
-		return internal.NewErrorEmptyValue("client secret")
+		return pkg.NewErrorEmptyValue("client secret")
 	}
 
 	if l.RedirectURI == "" {
-		internal.NewErrorEmptyValue("redirect uri")
+		pkg.NewErrorEmptyValue("redirect uri")
 	}
 
 	form := url.Values{}
@@ -106,7 +106,7 @@ func (l *Linkedin) GetAccessToken(ctx context.Context, authorizationCode string)
 func (l *Linkedin) GetUser(ctx context.Context) (api.Result, error) {
 
 	if l.Token == "" {
-		return nil, internal.NewErrorEmptyValue("access token")
+		return nil, pkg.NewErrorEmptyValue("access token")
 	}
 
 	headers := map[string]string{

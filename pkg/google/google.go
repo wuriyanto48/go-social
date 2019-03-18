@@ -1,4 +1,4 @@
-package github
+package google
 
 import (
 	"context"
@@ -8,22 +8,22 @@ import (
 	"strings"
 
 	"github.com/wuriyanto48/go-social/api"
-	"github.com/wuriyanto48/go-social/internal"
+	"github.com/wuriyanto48/go-social/pkg"
 )
 
 const (
-	// DefaultAuthURI default Authorization URI for Github
-	DefaultAuthURI = "https://github.com/login/oauth/authorize"
+	// DefaultAuthURI default Authorization URI for Google
+	DefaultAuthURI = "https://accounts.google.com/o/oauth2/auth"
 
-	// DefaultTokenURI default Token URI for Github
-	DefaultTokenURI = "https://github.com/login/oauth/access_token"
+	// DefaultTokenURI default Token URI for Google
+	DefaultTokenURI = "https://accounts.google.com/o/oauth2/token"
 
-	// DefaultAPIRURI default API URI for Github
-	DefaultAPIRURI = "https://api.github.com/user"
+	// DefaultAPIRURI default API URI for Google
+	DefaultAPIRURI = "https://www.googleapis.com/oauth2/v2/userinfo"
 )
 
-// Github struct
-type Github struct {
+// Google struct
+type Google struct {
 	ClientID     string
 	ClientSecret string
 	AuthURI      string
@@ -31,13 +31,13 @@ type Github struct {
 	TokenURI     string
 	RedirectURI  string
 	Token        string
-	httpClient   *internal.HTTPClient
+	httpClient   *pkg.HTTPClient
 }
 
-// New function, Github's Constructor
-func New(clientID, clientSecret, redirectURI string) *Github {
-	httpClient := internal.NewHTTPClient()
-	return &Github{
+// New function, Google's Constructor
+func New(clientID, clientSecret, redirectURI string) *Google {
+	httpClient := pkg.NewHTTPClient()
+	return &Google{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
 		RedirectURI:  redirectURI,
@@ -49,23 +49,23 @@ func New(clientID, clientSecret, redirectURI string) *Github {
 }
 
 // GetAuthURI function
-func (g *Github) GetAuthURI() (string, error) {
+func (g *Google) GetAuthURI() (string, error) {
 	return "", nil
 }
 
 // GetAccessToken function
-func (g *Github) GetAccessToken(ctx context.Context, authorizationCode string) error {
+func (g *Google) GetAccessToken(ctx context.Context, authorizationCode string) error {
 
 	if g.ClientID == "" {
-		return internal.NewErrorEmptyValue("client id")
+		return pkg.NewErrorEmptyValue("client id")
 	}
 
 	if g.ClientSecret == "" {
-		return internal.NewErrorEmptyValue("client secret")
+		return pkg.NewErrorEmptyValue("client secret")
 	}
 
 	if g.RedirectURI == "" {
-		internal.NewErrorEmptyValue("redirect uri")
+		pkg.NewErrorEmptyValue("redirect uri")
 	}
 
 	form := url.Values{}
@@ -77,16 +77,17 @@ func (g *Github) GetAccessToken(ctx context.Context, authorizationCode string) e
 
 	headers := map[string]string{
 		"Content-Type": "application/x-www-form-urlencoded",
-		"Accept":       "application/json",
 	}
 
 	var response struct {
 		AccessToken      string `json:"access_token"`
-		TokenType        string `json:"token_type"`
+		ExpiresIn        int    `json:"expires_in"`
+		RefreshToken     string `json:"refresh_token"`
 		Scope            string `json:"scope"`
+		TokenType        string `json:"token_type"`
+		IDToken          string `json:"id_token"`
 		Error            string `json:"error"`
 		ErrorDescription string `json:"error_description"`
-		ErrorURI         string `json:"error_uri"`
 	}
 
 	err := g.httpClient.Execute(ctx, "POST", g.TokenURI, strings.NewReader(form.Encode()), &response, headers)
@@ -105,10 +106,10 @@ func (g *Github) GetAccessToken(ctx context.Context, authorizationCode string) e
 }
 
 // GetUser function
-func (g *Github) GetUser(ctx context.Context) (api.Result, error) {
+func (g *Google) GetUser(ctx context.Context) (api.Result, error) {
 
 	if g.Token == "" {
-		return nil, internal.NewErrorEmptyValue("access token")
+		return nil, pkg.NewErrorEmptyValue("access token")
 	}
 
 	headers := map[string]string{
@@ -123,8 +124,8 @@ func (g *Github) GetUser(ctx context.Context) (api.Result, error) {
 		return nil, err
 	}
 
-	if len(response.Message) > 0 {
-		return nil, errors.New(response.Message)
+	if response.Error != nil {
+		return nil, errors.New(response.Error.Message)
 	}
 
 	return &response, nil

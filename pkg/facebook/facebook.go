@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"github.com/wuriyanto48/go-social/api"
-	"github.com/wuriyanto48/go-social/internal"
+	"github.com/wuriyanto48/go-social/pkg"
 )
 
 const (
@@ -31,12 +31,12 @@ type Facebook struct {
 	TokenURI     string
 	RedirectURI  string
 	Token        string
-	httpClient   *internal.HTTPClient
+	httpClient   *pkg.HTTPClient
 }
 
 // New function, Facebook's Constructor
 func New(clientID, clientSecret, redirectURI string) *Facebook {
-	httpClient := internal.NewHTTPClient()
+	httpClient := pkg.NewHTTPClient()
 	return &Facebook{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
@@ -57,15 +57,15 @@ func (f *Facebook) GetAuthURI() (string, error) {
 func (f *Facebook) GetAccessToken(ctx context.Context, authorizationCode string) error {
 
 	if f.ClientID == "" {
-		return internal.NewErrorEmptyValue("client id")
+		return pkg.NewErrorEmptyValue("client id")
 	}
 
 	if f.ClientSecret == "" {
-		return internal.NewErrorEmptyValue("client secret")
+		return pkg.NewErrorEmptyValue("client secret")
 	}
 
 	if f.RedirectURI == "" {
-		internal.NewErrorEmptyValue("redirect uri")
+		pkg.NewErrorEmptyValue("redirect uri")
 	}
 
 	form := url.Values{}
@@ -111,7 +111,7 @@ func (f *Facebook) GetAccessToken(ctx context.Context, authorizationCode string)
 func (f *Facebook) GetUser(ctx context.Context) (api.Result, error) {
 
 	if f.Token == "" {
-		return nil, internal.NewErrorEmptyValue("access token")
+		return nil, pkg.NewErrorEmptyValue("access token")
 	}
 
 	var response User
