@@ -3,7 +3,7 @@ package social
 import (
 	"testing"
 
-	"github.com/wuriyanto48/go-social/internal/facebook"
+	"github.com/wuriyanto48/go-social/pkg/facebook"
 )
 
 func TestSocial(t *testing.T) {

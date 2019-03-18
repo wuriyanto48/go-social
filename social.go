@@ -4,10 +4,10 @@ import (
 	"errors"
 
 	"github.com/wuriyanto48/go-social/api"
-	"github.com/wuriyanto48/go-social/internal/facebook"
-	"github.com/wuriyanto48/go-social/internal/github"
-	"github.com/wuriyanto48/go-social/internal/google"
-	"github.com/wuriyanto48/go-social/internal/linkedin"
+	"github.com/wuriyanto48/go-social/pkg/facebook"
+	"github.com/wuriyanto48/go-social/pkg/github"
+	"github.com/wuriyanto48/go-social/pkg/google"
+	"github.com/wuriyanto48/go-social/pkg/linkedin"
 )
 
 // Type generic type of social login
@@ -50,7 +50,7 @@ func (t Type) String() string {
 	case Github:
 		return "Github"
 	default:
-		return "Facebook"
+		panic("unknown social media")
 	}
 }
 
