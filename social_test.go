@@ -22,7 +22,7 @@ func TestProviderType(t *testing.T) {
 		expected1 := "https://graph.facebook.com/oauth/access_token"
 		expected2 := "https://graph.facebook.com/v2/oauth/access_token"
 
-		result, err := New(Facebook, "client_id", "client_secret", "http://localhost:8080/callback")
+		result, err := New(Facebook, "client_id", "client_secret", "tenant_id", "http://localhost:8080/callback", "scope")
 
 		if err != nil {
 			t.Error(err)
