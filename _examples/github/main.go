@@ -11,14 +11,16 @@ import (
 
 //https://github.com/login/oauth/authorize?client_id={your_client_id}&redirect_uri=http://localhost:8080/callback&scope=user,repo
 func main() {
-	g, err := social.New(social.Github, "client_id", "client_secret", "http://localhost:8080/callback")
+	g, err := social.New(social.Github, "client_id", "client_secret", "", "http://localhost:8080/callback", "")
 
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	ctx := context.Background()
-	ctx, _ = context.WithTimeout(ctx, 3000*time.Millisecond)
+	ctx, cancel := context.WithTimeout(ctx, 2000*time.Millisecond)
+
+	defer func() { cancel() }()
 
 	err = g.GetAccessToken(ctx, "code")
 
