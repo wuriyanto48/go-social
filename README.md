@@ -34,7 +34,7 @@ import (
 )
 
 func main() {
-	f, err := social.New(social.Facebook, "client_id", "client_secret", "http://localhost:8080/callback")
+	f, err := social.New(social.Facebook, "client_id", "client_secret", "", "http://localhost:8080/callback", "")
 
 	if err != nil {
 		fmt.Println(err)
