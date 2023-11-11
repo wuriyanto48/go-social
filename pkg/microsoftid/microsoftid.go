@@ -37,8 +37,8 @@ type MicrosoftID struct {
 }
 
 // New function, MicrosoftID's Constructor
-func New(clientID, clientSecret, tenantID, redirectURI, scope string) *MicrosoftID {
-	httpClient := pkg.NewHTTPClient()
+func New(clientID, clientSecret, tenantID, redirectURI, scope string, timeout int) *MicrosoftID {
+	httpClient := pkg.NewHTTPClient(timeout)
 	return &MicrosoftID{
 		TenantID:     tenantID,
 		ClientID:     clientID,

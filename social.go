@@ -39,6 +39,11 @@ const (
 	MicrosoftID
 )
 
+const (
+	// DefaultHTTPClientTimeout for HTTP Client
+	DefaultHTTPClientTimeout = 5
+)
+
 // String function
 // returns string of Type
 func (t Type) String() string {
@@ -60,19 +65,24 @@ func (t Type) String() string {
 	}
 }
 
-func newProvider(clientID, clientSecret, tenantID, redirectURI, scope string) *provider {
+func newProvider(clientID, clientSecret, tenantID, redirectURI, scope string, timeout int) *provider {
 	providers := make(map[string]api.Service)
-	providers["Facebook"] = facebook.New(clientID, clientSecret, redirectURI)
-	providers["Google"] = google.New(clientID, clientSecret, redirectURI)
-	providers["Github"] = github.New(clientID, clientSecret, redirectURI)
-	providers["Linkedin"] = linkedin.New(clientID, clientSecret, redirectURI)
-	providers["MicrosoftID"] = microsoftid.New(clientID, clientSecret, tenantID, redirectURI, scope)
+	providers["Facebook"] = facebook.New(clientID, clientSecret, redirectURI, timeout)
+	providers["Google"] = google.New(clientID, clientSecret, redirectURI, timeout)
+	providers["Github"] = github.New(clientID, clientSecret, redirectURI, timeout)
+	providers["Linkedin"] = linkedin.New(clientID, clientSecret, redirectURI, timeout)
+	providers["MicrosoftID"] = microsoftid.New(clientID, clientSecret, tenantID, redirectURI, scope, timeout)
 	return &provider{providers}
 }
 
 // New , return api.Service implementation
-func New(socialType Type, clientID, clientSecret, tenantID, redirectURI, scope string) (api.Service, error) {
-	providers := newProvider(clientID, clientSecret, tenantID, redirectURI, scope)
+func New(socialType Type, clientID, clientSecret, tenantID, redirectURI, scope string, timeout int) (api.Service, error) {
+	// set default http client timeout to 5 seconds
+	if timeout <= 0 {
+		timeout = DefaultHTTPClientTimeout
+	}
+
+	providers := newProvider(clientID, clientSecret, tenantID, redirectURI, scope, timeout)
 	provider, ok := providers.providers[socialType.String()]
 
 	if !ok {

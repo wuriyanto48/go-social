@@ -35,8 +35,8 @@ type Github struct {
 }
 
 // New function, Github's Constructor
-func New(clientID, clientSecret, redirectURI string) *Github {
-	httpClient := pkg.NewHTTPClient()
+func New(clientID, clientSecret, redirectURI string, timeout int) *Github {
+	httpClient := pkg.NewHTTPClient(timeout)
 	return &Github{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,

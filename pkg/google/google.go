@@ -35,8 +35,8 @@ type Google struct {
 }
 
 // New function, Google's Constructor
-func New(clientID, clientSecret, redirectURI string) *Google {
-	httpClient := pkg.NewHTTPClient()
+func New(clientID, clientSecret, redirectURI string, timeout int) *Google {
+	httpClient := pkg.NewHTTPClient(timeout)
 	return &Google{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,

@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"time"
 )
 
 // HTTPClient structure
@@ -14,9 +15,11 @@ type HTTPClient struct {
 
 // NewHTTPClient function for intialize HTTPClient object
 // Parameter, timeout in time.Duration
-func NewHTTPClient() *HTTPClient {
+func NewHTTPClient(timeout int) *HTTPClient {
 	return &HTTPClient{
-		client: &http.Client{},
+		client: &http.Client{
+			Timeout: time.Duration(timeout) * time.Second,
+		},
 	}
 }
 
@@ -30,8 +33,10 @@ func (c *HTTPClient) newRequest(ctx context.Context, method string, fullPath str
 
 	req = req.WithContext(ctx)
 
-	for key, value := range headers {
-		req.Header.Set(key, value)
+	if headers != nil {
+		for key, value := range headers {
+			req.Header.Set(key, value)
+		}
 	}
 
 	return req, nil

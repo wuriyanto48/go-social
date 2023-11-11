@@ -36,8 +36,8 @@ type Linkedin struct {
 }
 
 // New function, Linkedin's Constructor
-func New(clientID, clientSecret, redirectURI string) *Linkedin {
-	httpClient := pkg.NewHTTPClient()
+func New(clientID, clientSecret, redirectURI string, timeout int) *Linkedin {
+	httpClient := pkg.NewHTTPClient(timeout)
 	return &Linkedin{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,

@@ -35,8 +35,8 @@ type Facebook struct {
 }
 
 // New function, Facebook's Constructor
-func New(clientID, clientSecret, redirectURI string) *Facebook {
-	httpClient := pkg.NewHTTPClient()
+func New(clientID, clientSecret, redirectURI string, timeout int) *Facebook {
+	httpClient := pkg.NewHTTPClient(timeout)
 	return &Facebook{
 		ClientID:     clientID,
 		ClientSecret: clientSecret,
