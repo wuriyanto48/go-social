@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/wuriyanto48/go-social"
 	"github.com/wuriyanto48/go-social/pkg/microsoftid"
@@ -11,16 +10,13 @@ import (
 
 //https://login.microsoftonline.com/{your_tenant_id}/oauth2/v2.0/authorize?client_id={your_client_id}&response_type=code&scope=https://graph.microsoft.com/User.Read&redirect_uri=http://localhost:3000/callback
 func main() {
-	g, err := social.New(social.MicrosoftID, "client_id", "client_secret", "tenant_id", "http://localhost:3000/callback", "https://graph.microsoft.com/User.Read")
+	g, err := social.New(social.MicrosoftID, "client_id", "client_secret", "tenant_id", "http://localhost:3000/callback", "https://graph.microsoft.com/User.Read", 0)
 
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	ctx := context.Background()
-	ctx, cancel := context.WithTimeout(ctx, 2000*time.Millisecond)
-
-	defer func() { cancel() }()
 
 	fmt.Println(g.GetAuthURI())
 
