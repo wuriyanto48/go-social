@@ -38,9 +38,9 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 	}
-
-    // using context for cancellation
-    ctx := context.Background()
+	
+	// using context for cancellation
+	ctx := context.Background()
 
 	err = f.GetAccessToken(ctx, "authorization_code")
 
