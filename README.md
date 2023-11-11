@@ -27,7 +27,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/wuriyanto48/go-social"
 	"github.com/wuriyanto48/go-social/pkg/facebook"
@@ -40,10 +39,8 @@ func main() {
 		fmt.Println(err)
 	}
 
-        // using context for cancellation
-        ctx := context.Background()
-        // set context timeout
-	ctx, _ = context.WithTimeout(ctx, 2000*time.Millisecond)
+    // using context for cancellation
+    ctx := context.Background()
 
 	err = f.GetAccessToken(ctx, "authorization_code")
 
